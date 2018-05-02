@@ -44,13 +44,16 @@ app.get('/api/articles/:id?', async (req, res) => {
 
 app.delete('/api/articles/:id?', async (req, res) => {
   const { id } = req.params;
-  try {
-    const article = await Article.findById(id);
-    console.log('ARTICLE FOUND:\n', article);
-    res.status(200).send(article);
-  } catch (exc) {
-    console.log('ARTICLE NOT FOUND');
-    res.sendStatus(404);
+  if (id) {
+    try {
+      await Article.findByIdAndRemove(id);
+      res.sendStatus(200);
+    } catch (exc) {
+      console.log('COULD NOT DELETE ARTICLE:\n', exc.message);
+      res.sendStatus(404);
+    }
+  } else {
+    res.sendStatus(405);
   }
 });
 
