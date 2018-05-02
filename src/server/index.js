@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const compression = require('compression');
 const express = require('express');
 const bodyParser = require('body-parser');
