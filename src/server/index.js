@@ -57,6 +57,20 @@ app.delete('/api/articles/:id?', async (req, res) => {
   }
 });
 
+app.patch('/api/articles/:id?', async (req, res) => {
+  const { id } = req.params;
+  if (id) {
+    try {
+      res.status(200).send(await Article.findByIdAndUpdate(id, req.body, { new: true }));
+    } catch (exc) {
+      console.log('ARTICLE COULD NOT BE UPDATED:\n', exc.message);
+      res.sendStatus(500);
+    }
+  } else {
+    res.sendStatus(405);
+  }
+});
+
 // SERVES STATIC HOMEPAGE
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
