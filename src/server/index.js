@@ -29,6 +29,20 @@ app.post('/api/articles/create', async (req, res) => {
   }
 });
 
+app.get('/api/articles/:id', async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  try {
+    const article = await Article.findById(id);
+    console.log('ARTICLE FOUND:\n', article);
+    res.send(article);
+    res.sendStatus(200);
+  } catch (exc) {
+    console.log('ARTICLE NOT FOUND');
+    res.sendStatus(404);
+  }
+});
+
 // SERVES STATIC HOMEPAGE
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/index.html'));
