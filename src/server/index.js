@@ -21,10 +21,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/api/articles/create', async (req, res) => {
   try {
-    console.log('NEWLY CREATED ARTICLE: ', await Article.create(req.body));
+    console.log('NEWLY CREATED ARTICLE:\n', await Article.create(req.body));
     res.sendStatus(201);
   } catch (exc) {
-    console.log('ARTICLE COULD NOT BE CREATED: ', exc);
+    console.log('ARTICLE COULD NOT BE CREATED:\n', exc);
     res.sendStatus(500);
   }
 });

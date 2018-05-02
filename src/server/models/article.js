@@ -5,15 +5,19 @@ const { Schema } = mongoose;
 const ArticleSchema = new Schema({
   title: {
     type: String,
+    required: true,
   },
   author: {
     type: String,
+    required: true,
   },
   body: {
     type: String,
+    required: true,
   },
   tags: {
     type: [String],
+    required: false,
   },
 });
 
