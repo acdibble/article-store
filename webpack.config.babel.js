@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: [
+    'babel-polyfill',
     './src/client',
   ],
   output: {
@@ -10,11 +11,16 @@ module.exports = {
     publicPath: 'http://localhost:8080/dist',
   },
   module: {
-    rules: [
-      { test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/ },
-    ],
     loaders: [
       { test: /\.css$/, loader: 'style-loader!css-loader' },
+      {
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: ['es2015', 'stage-3', 'react'],
+        },
+      },
     ],
   },
   resolve: {
