@@ -24,8 +24,8 @@ app.post('/api/articles/create', async (req, res) => {
     const newArticle = await Article.create(req.body);
     console.log(newArticle);
     res.sendStatus(201);
-  } catch (exception) {
-    console.log(exception);
+  } catch (exc) {
+    console.log(exc);
     res.sendStatus(500);
   }
 });
