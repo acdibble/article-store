@@ -40,7 +40,11 @@ app.get('/api/articles/:id?', async (req, res) => {
       res.sendStatus(404);
     }
   } else {
-    res.status(200).send(await Article.find());
+    const articles = (await Article.find()).reduce((acc, a) => {
+      acc[a._id] = a; // eslint-disable-line
+      return acc;
+    }, {});
+    res.status(200).send(articles);
   }
 });
 
