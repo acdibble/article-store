@@ -29,7 +29,20 @@ app.post('/api/articles/create', async (req, res) => {
   }
 });
 
-app.get('/api/articles/:id', async (req, res) => {
+app.get('/api/articles/:id?', async (req, res) => {
+  const { id } = req.params;
+  if (id) {
+    try {
+      res.status(200).send(await Article.findById(id));
+    } catch (exc) {
+      res.sendStatus(404);
+    }
+  } else {
+    res.status(200).send(await Article.find());
+  }
+});
+
+app.delete('/api/articles/:id?', async (req, res) => {
   const { id } = req.params;
   try {
     const article = await Article.findById(id);
