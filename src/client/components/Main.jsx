@@ -11,12 +11,12 @@ class Main extends Component {
       id: '',
     };
 
+    this.handleDelete = this.handleDelete.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
   }
 
   async componentWillMount() {
-    const { data } = await axios.get('/api/articles');
-    this.setState({ articles: data });
+    this.setState({ articles: (await axios.get('/api/articles')).data });
   }
 
   handleToggle(e) {
@@ -26,10 +26,20 @@ class Main extends Component {
     });
   }
 
+  async handleDelete() {
+    const { id } = this.state;
+    await axios.delete(`/api/articles/${id}`);
+    this.setState({
+      articles: (await axios.get('/api/articles')).data,
+      show: !this.state.show,
+    });
+  }
+
   render() {
     if (!this.state.articles) return (<div>Hello world.</div>);
 
     const { articles } = this.state;
+    const currentArticle = articles[this.state.id];
 
     return (
       <div className="container">
@@ -53,12 +63,16 @@ class Main extends Component {
 
         <Modal show={this.state.show} onHide={this.handleToggle}>
           <Modal.Header closeButton>
-            <Modal.Title>{articles[this.state.id] ? articles[this.state.id].title : 'null'}</Modal.Title>
+            <Modal.Title>{currentArticle ? currentArticle.title : 'null'}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {articles[this.state.id] ? articles[this.state.id].body : 'null'}
+            {currentArticle ? currentArticle.body : 'null'}
+            <br />
+            <br />
+            <small>tags: {!currentArticle ? 'null' : currentArticle.tags ? currentArticle.tags.join(', ') : 'none' /* eslint-disable-line */}</small>
           </Modal.Body>
           <Modal.Footer>
+            <Button className="pull-left" bsStyle="danger" onClick={this.handleDelete}>Delete article</Button>
             <Button onClick={this.handleToggle}>Close</Button>
           </Modal.Footer>
         </Modal>
