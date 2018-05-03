@@ -14,6 +14,7 @@ import {
   OverlayTrigger,
   Popover,
 } from 'react-bootstrap';
+import moment from 'moment';
 
 import {
   fetchAllArticles,
@@ -124,10 +125,10 @@ class Main extends Component {
                 onClick={this.handleToggle}
               >
                 <h4 id={_id} className="list-group-item-heading">{a.title}</h4>
-                <p id={_id} className="list-group-item-text">by {a.author}</p>
+                <p id={_id} className="list-group-item-text">by {a.author} -- ({moment(a.date).fromNow()})</p>
               </a>
             );
-          })}
+          }).sort((a, b) => a.props.id < b.props.id)}
         </ListGroup>
 
         <Modal show={this.state.showDisplayModal} onHide={this.handleToggle}>
