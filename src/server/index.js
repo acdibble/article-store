@@ -68,7 +68,9 @@ app.put('/api/articles/:id?', async (req, res) => {
   const { id } = req.params;
   if (id) {
     try {
-      res.status(200).send(await Article.findByIdAndUpdate(id, req.body, { new: true }));
+      const tags = req.body.tags.replace(/\s/g, '').split(',').filter(item => !!item);
+      const article = await Article.findByIdAndUpdate(id, { ...req.body, tags }, { new: true });
+      res.status(200).send(article);
     } catch (exc) {
       console.log('ARTICLE COULD NOT BE UPDATED:\n', exc.message);
       res.sendStatus(500);
