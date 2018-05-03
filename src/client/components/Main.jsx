@@ -11,6 +11,8 @@ import {
   FormControl,
   Col,
   HelpBlock,
+  OverlayTrigger,
+  Popover,
 } from 'react-bootstrap';
 
 import {
@@ -102,6 +104,12 @@ class Main extends Component {
 
     const currentArticle = articles[this.state.id];
 
+    const confirmPopover = (
+      <Popover id="popover-trigger-click-root-close" title="Are you sure?">
+        <Button bsSize="small" bsStyle="danger" onClick={this.handleDelete}>Confirm</Button>
+      </Popover>
+    );
+
     return (
       <div className="container">
         <ListGroup>
@@ -133,7 +141,9 @@ class Main extends Component {
             <small>tags: {!currentArticle ? 'null' : currentArticle.tags ? currentArticle.tags.join(', ') : 'none' /* eslint-disable-line */}</small>
           </Modal.Body>
           <Modal.Footer>
-            <Button className="pull-left" bsStyle="danger" onClick={this.handleDelete}>Delete article</Button>
+            <OverlayTrigger trigger="click" rootClose overlay={confirmPopover}>
+              <Button className="pull-left" bsStyle="danger">Delete article</Button>
+            </OverlayTrigger>
             <Button className="pull-left" bsStyle="primary" onClick={this.toggleEditModal}>Edit article</Button>
             <Button onClick={this.handleToggle}>Close</Button>
           </Modal.Footer>
