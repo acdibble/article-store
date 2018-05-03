@@ -8,6 +8,11 @@ const Bottom = () => (
         Thanks for reading!
       </NavItem>
     </Nav>
+    <Nav pullRight>
+      <NavItem href="https://github.com/acdibble/article-store" target="_blank">
+        Source
+      </NavItem>
+    </Nav>
   </Navbar>
 );
 
