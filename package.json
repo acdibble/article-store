@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --ignore dist --exec babel-node src/server",
+    "start": "nodemon --ignore dist --exec babel-node server",
     "wds": "webpack-dev-server --progress"
   },
   "keywords": [],
@@ -16,7 +16,6 @@
     "body-parser": "^1.18.1",
     "bootstrap": "^3.3.7",
     "compression": "^1.7.2",
-    "css-loader": "^0.28.7",
     "dotenv": "^5.0.1",
     "express": "^4.15.4",
     "mongoose": "^5.0.17",

@@ -1,13 +1,16 @@
 const path = require('path');
 
+const SRC_DIR = path.join(__dirname, '/client/src');
+const DIST_DIR = path.join(__dirname, '/client/dist');
+
 module.exports = {
   entry: [
     'babel-polyfill',
-    './src/client',
+    SRC_DIR,
   ],
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: DIST_DIR,
     publicPath: 'http://localhost:8080/dist',
   },
   module: {
