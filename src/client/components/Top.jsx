@@ -15,13 +15,15 @@ import {
   HelpBlock,
 } from 'react-bootstrap';
 
-import { createAndAddToState } from '../actions/articleActions';
+import { createAndAddToState, fetchArticlesByTag, fetchAllArticles } from '../actions/articleActions';
 
 const { Header, Brand } = Navbar;
 
 class Top extends Component {
   static propTypes = {
     createAndAddToState: PropTypes.func.isRequired,
+    fetchArticlesByTag: PropTypes.func.isRequired,
+    fetchAllArticles: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -34,9 +36,12 @@ class Top extends Component {
       author: '',
       body: '',
       tags: '',
+      search: '',
     };
 
+    this.handleEnter = this.handleEnter.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
   }
@@ -70,6 +75,21 @@ class Top extends Component {
     });
   }
 
+  handleSearch() {
+    const { search } = this.state;
+    if (search) {
+      this.props.fetchArticlesByTag(search);
+    } else {
+      this.props.fetchAllArticles();
+    }
+  }
+
+  handleEnter({ keyCode }) {
+    if (keyCode === 13) {
+      this.handleSearch();
+    }
+  }
+
   render() {
     return (
       <div>
@@ -84,6 +104,19 @@ class Top extends Component {
               Add new article
             </NavItem>
           </Nav>
+          <Navbar.Form pullRight>
+            <FormGroup>
+              <FormControl
+                id="search"
+                value={this.state.search}
+                onChange={this.handleChange}
+                type="text"
+                placeholder="Search by tag"
+                onKeyUp={this.handleEnter}
+              />
+            </FormGroup>{' '}
+            <Button onClick={this.handleSearch}>Submit</Button>
+          </Navbar.Form>
         </Navbar>
 
         <Modal show={this.state.show} onHide={this.handleToggle}>
@@ -169,4 +202,4 @@ class Top extends Component {
   }
 }
 
-export default connect(null, { createAndAddToState })(Top);
+export default connect(null, { createAndAddToState, fetchArticlesByTag, fetchAllArticles })(Top);
