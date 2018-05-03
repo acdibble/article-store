@@ -125,7 +125,8 @@ class Main extends Component {
     return (
       <div className="container" style={{ marginBottom: '50px' }}>
         <ListGroup>
-          {articlesKeys.map((_id) => {
+          {articlesKeys.sort((a, b) => moment(articles[a].date).isBefore(articles[b].date) || -1)
+            .map((_id) => {
             const a = articles[_id];
             return (
               <a
@@ -139,7 +140,7 @@ class Main extends Component {
                 <p id={_id} className="list-group-item-text">by {a.author} -- ({moment(a.date).fromNow()})</p>
               </a>
             );
-          }).sort((a, b) => a.props.id < b.props.id)}
+          })}
         </ListGroup>
 
         <Modal show={this.state.showDisplayModal} onHide={this.handleToggle}>
@@ -152,7 +153,7 @@ class Main extends Component {
             <small>tags: {!currentArticle ? 'null' : currentArticle.tags.join(', ') || 'none'}</small>
           </Modal.Body>
           <Modal.Footer>
-            <OverlayTrigger trigger="click" rootClose overlay={confirmPopover}>
+            <OverlayTrigger trigger="click" rootClose overlay={confirmPopover} placement="top">
               <Button className="pull-left" bsStyle="danger">Delete article</Button>
             </OverlayTrigger>
             <Button className="pull-left" bsStyle="primary" onClick={this.toggleEditModal}>Edit article</Button>
