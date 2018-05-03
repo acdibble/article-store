@@ -105,10 +105,10 @@ class Main extends Component {
       return (
         <div className="container">
           <ListGroup>
-            <li className="list-group-item">
+            <a href="#" className="list-group-item" onClick={this.props.fetchAllArticles}>
               <h4 className="list-group-item-heading">No results.</h4>
               <p className="list-group-item-text">Please try again.</p>
-            </li>
+            </a>
           </ListGroup>
         </div>
       );
