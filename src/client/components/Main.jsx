@@ -9,7 +9,11 @@ import { fetchAllArticles } from '../actions/articleActions';
 class Main extends Component {
   static propTypes = {
     fetchAllArticles: PropTypes.func.isRequired,
-    articles: PropTypes.objectOf(PropTypes.object).isRequired,
+    articles: PropTypes.objectOf(PropTypes.object),
+  }
+
+  static defaultProps = {
+    articles: null,
   }
 
   constructor(props) {
@@ -45,7 +49,7 @@ class Main extends Component {
     if (!this.props.articles) return (<div>Hello world.</div>);
 
     const { articles } = this.props;
-    
+
     const currentArticle = articles[this.state.id];
 
     return (

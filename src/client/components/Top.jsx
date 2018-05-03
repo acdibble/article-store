@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import {
   Navbar,
   Nav,
@@ -14,9 +16,15 @@ import {
 } from 'react-bootstrap';
 import axios from 'axios';
 
+import { fetchAllArticles } from '../actions/articleActions';
+
 const { Header, Brand } = Navbar;
 
 class Top extends Component {
+  static propTypes = {
+    fetchAllArticles: PropTypes.func.isRequired,
+  }
+
   constructor(props) {
     super(props);
 
@@ -51,6 +59,8 @@ class Top extends Component {
         title: '',
         tags: '',
       });
+      this.props.fetchAllArticles();
+      this.handleToggle();
     } else {
       this.setState({ isDirty: true });
     }
@@ -161,4 +171,4 @@ class Top extends Component {
   }
 }
 
-export default Top;
+export default connect(null, { fetchAllArticles })(Top);
