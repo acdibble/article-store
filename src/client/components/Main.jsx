@@ -68,7 +68,7 @@ class Main extends Component {
       title,
       author,
       body,
-      tags,
+      tags: tags.join(','),
     });
   }
 
@@ -87,10 +87,12 @@ class Main extends Component {
 
   submitEdit() {
     const { id, title, author, body, tags } = this.state;
-    this.props.editAndUpdateState(id, { title, author, body, tags: tags.join('') });
-    this.setState({
-      showEditModal: false,
-    });
+    if (id && title && author) {
+      this.props.editAndUpdateState(id, { title, author, body, tags });
+      this.setState({
+        showEditModal: false,
+      });
+    }
   }
 
   render() {
@@ -143,7 +145,7 @@ class Main extends Component {
           </Modal.Header>
           <Modal.Body>
             <Form horizontal>
-              <FormGroup validationState={!this.state.title && this.state.isDirty ? 'error' : null}>
+              <FormGroup validationState={!this.state.title ? 'error' : null}>
                 <Col componentClass={ControlLabel} sm={2}>
                   Title
                 </Col>
@@ -156,11 +158,11 @@ class Main extends Component {
                     placeholder="Title"
                   />
                   <FormControl.Feedback />
-                  {!this.state.title && this.state.isDirty && <HelpBlock>Required</HelpBlock>}
+                  {!this.state.title && <HelpBlock>Required</HelpBlock>}
                 </Col>
               </FormGroup>
 
-              <FormGroup validationState={!this.state.author && this.state.isDirty ? 'error' : null}>
+              <FormGroup validationState={!this.state.author ? 'error' : null}>
                 <Col componentClass={ControlLabel} sm={2}>
                   Author
                 </Col>
@@ -173,11 +175,11 @@ class Main extends Component {
                     placeholder="Author"
                   />
                   <FormControl.Feedback />
-                  {!this.state.author && this.state.isDirty && <HelpBlock>Required</HelpBlock>}
+                  {!this.state.author && <HelpBlock>Required</HelpBlock>}
                 </Col>
               </FormGroup>
 
-              <FormGroup validationState={!this.state.body && this.state.isDirty ? 'error' : null}>
+              <FormGroup validationState={!this.state.body ? 'error' : null}>
                 <Col componentClass={ControlLabel} sm={2}>
                   Body
                 </Col>
@@ -190,7 +192,7 @@ class Main extends Component {
                     placeholder="Body"
                   />
                   <FormControl.Feedback />
-                  {!this.state.body && this.state.isDirty && <HelpBlock>Required</HelpBlock>}
+                  {!this.state.body && <HelpBlock>Required</HelpBlock>}
                 </Col>
               </FormGroup>
 
