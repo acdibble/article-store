@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/api/articles/', async (req, res) => {
   try {
-    const tags = req.body.tags.replace(/\s/g, '').split(',');
+    const tags = req.body.tags.replace(/\s/g, '').split(',').filter(item => !!item);
     const article = await Article.create({ ...req.body, tags });
     res.status(201).send({ [article._id]: article });
   } catch (exc) {
