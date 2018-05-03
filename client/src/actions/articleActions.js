@@ -4,6 +4,7 @@ const FETCH_ALL_ARTICLES = 'FETCH_ALL_ARTICLES';
 const CREATE_AND_ADD_TO_STATE = 'CREATE_AND_ADD_TO_STATE';
 const DELETE_AND_REMOVE_FROM_STATE = 'DELETE_AND_REMOVE_FROM_STATE';
 const EDIT_AND_UPDATE_STATE = 'EDIT_AND_UPDATE_STATE';
+const FETCH_ARTICLES_BY_TAG = 'FETCH_ARTICLES_BY_TAG';
 
 const fetchAllArticles = async () => {
   const { data } = await axios.get('/api/articles');
@@ -37,6 +38,14 @@ const editAndUpdateState = async (id, values) => {
   };
 };
 
+const fetchArticlesByTag = async (tag) => {
+  const { data } = await axios.get('/api/articles', { params: { tag } });
+  return {
+    type: FETCH_ARTICLES_BY_TAG,
+    payload: data,
+  };
+};
+
 export {
   FETCH_ALL_ARTICLES,
   fetchAllArticles,
@@ -46,4 +55,6 @@ export {
   deleteAndRemoveFromState,
   EDIT_AND_UPDATE_STATE,
   editAndUpdateState,
+  FETCH_ARTICLES_BY_TAG,
+  fetchArticlesByTag,
 };

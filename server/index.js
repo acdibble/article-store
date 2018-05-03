@@ -32,21 +32,25 @@ app.post('/api/articles/', async (req, res) => {
   }
 });
 
-app.get('/api/articles/:id?', async (req, res) => {
-  const { id } = req.params;
-  if (id) {
-    try {
-      res.status(200).send(await Article.findById(id));
-    } catch (exc) {
-      res.sendStatus(404);
-    }
+app.get('/api/articles', async (req, res) => {
+  const { tag } = req.query;
+  let articles;
+  if (!tag) {
+    articles = await Article.find();
   } else {
-    const articles = (await Article.find()).reduce((acc, a) => {
-      acc[a._id] = a; // eslint-disable-line
-      return acc;
-    }, {});
-    res.status(200).send(articles);
+    articles = await Article.find({ tags: tag });
   }
+  articles = articles.reduce((acc, a) => {
+    acc[a._id] = a; // eslint-disable-line
+    return acc;
+  }, {});
+  console.log(articles);
+  res.status(200).send(articles);
+});
+
+app.get('/api/articles', async (req, res) => {
+  console.log(req.params);
+  res.sendStatus(200);
 });
 
 app.delete('/api/articles/:id?', async (req, res) => {

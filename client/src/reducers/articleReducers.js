@@ -3,6 +3,7 @@ import {
   CREATE_AND_ADD_TO_STATE,
   DELETE_AND_REMOVE_FROM_STATE,
   EDIT_AND_UPDATE_STATE,
+  FETCH_ARTICLES_BY_TAG,
 } from '../actions/articleActions';
 
 const articles = (state = {}, { type, payload }) => {
@@ -17,6 +18,8 @@ const articles = (state = {}, { type, payload }) => {
     }
     case EDIT_AND_UPDATE_STATE:
       return { ...state, ...payload };
+    case FETCH_ARTICLES_BY_TAG:
+      return { ...payload };
     default:
       return state;
   }
