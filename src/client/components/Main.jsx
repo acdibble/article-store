@@ -13,11 +13,16 @@ import {
   HelpBlock,
 } from 'react-bootstrap';
 
-import { fetchAllArticles, deleteAndRemoveFromState } from '../actions/articleActions';
+import {
+  fetchAllArticles,
+  deleteAndRemoveFromState,
+  editAndUpdateState,
+} from '../actions/articleActions';
 
 class Main extends Component {
   static propTypes = {
     fetchAllArticles: PropTypes.func.isRequired,
+    editAndUpdateState: PropTypes.func.isRequired,
     deleteAndRemoveFromState: PropTypes.func.isRequired,
     articles: PropTypes.objectOf(PropTypes.object),
   }
@@ -41,6 +46,7 @@ class Main extends Component {
 
     props.fetchAllArticles();
 
+    this.submitEdit = this.submitEdit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
@@ -76,6 +82,14 @@ class Main extends Component {
   handleChange({ target: { id, value } }) {
     this.setState({
       [id]: value,
+    });
+  }
+
+  submitEdit() {
+    const { id, title, author, body, tags } = this.state;
+    this.props.editAndUpdateState(id, { title, author, body, tags: tags.join('') });
+    this.setState({
+      showEditModal: false,
     });
   }
 
@@ -198,7 +212,7 @@ class Main extends Component {
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.toggleEditModal}>Cancel</Button>
-            <Button bsStyle="primary" onClick={() => console.log('hi')}>Submit</Button>
+            <Button bsStyle="primary" onClick={this.submitEdit}>Submit</Button>
           </Modal.Footer>
         </Modal>
       </div>
@@ -208,5 +222,10 @@ class Main extends Component {
 
 const mapStateToProps = ({ articles }) => ({ articles });
 
+const mapDispatchToProps = {
+  fetchAllArticles,
+  deleteAndRemoveFromState,
+  editAndUpdateState,
+};
 
-export default connect(mapStateToProps, { fetchAllArticles, deleteAndRemoveFromState })(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
