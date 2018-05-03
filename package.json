@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --ignore dist --exec babel-node server",
+    "heroku-postbuild": "webpack --config ./webpack.config.js --progress",
+    "start": "node server",
+    "server": "nodemon --ignore dist --exec babel-node server",
     "wds": "webpack-dev-server --progress"
   },
   "keywords": [],

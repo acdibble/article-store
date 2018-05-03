@@ -6,18 +6,18 @@ const DIST_DIR = path.join(__dirname, '/client/dist');
 module.exports = {
   entry: [
     'babel-polyfill',
-    SRC_DIR,
+    `${SRC_DIR}/index.jsx`,
   ],
   output: {
     filename: 'bundle.js',
     path: DIST_DIR,
-    publicPath: 'http://localhost:8080/dist',
   },
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
+        test: /\.jsx?/,
         loader: 'babel-loader',
+        include: SRC_DIR,
         exclude: /node_modules/,
         query: {
           presets: ['es2015', 'stage-2', 'stage-3', 'react'],
@@ -26,14 +26,6 @@ module.exports = {
       {
         test: /\.css$/,
         loader: 'style-loader!css-loader',
-      },
-      {
-        test: /\.png$/,
-        loader: 'url-loader?limit=100000',
-      },
-      {
-        test: /\.jpg$/,
-        loader: 'file-loader',
       },
       {
         test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,

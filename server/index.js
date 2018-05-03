@@ -81,8 +81,15 @@ app.put('/api/articles/:id?', async (req, res) => {
 });
 
 // SERVES STATIC HOMEPAGE
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+app.get('*', (req, res) => {
+  const p = req.path.replace(/^\//, '').replace(/\/$/, '');
+  if (p && p.endsWith('.js')) {
+    console.log(p);
+    const options = { headers: { 'content-type': 'application/javascript' } };
+    res.sendFile(path.join(__dirname, `../client/dist/${p}`), options);
+  } else {
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+  }
 });
 
 const port = process.env.PORT || 8000;
