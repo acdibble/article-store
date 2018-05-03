@@ -123,7 +123,7 @@ class Main extends Component {
     );
 
     return (
-      <div className="container">
+      <div className="container" style={{ marginBottom: '50px' }}>
         <ListGroup>
           {articlesKeys.map((_id) => {
             const a = articles[_id];
