@@ -3,7 +3,7 @@ import axios from 'axios';
 const FETCH_ALL_ARTICLES = 'FETCH_ALL_ARTICLES';
 const CREATE_AND_ADD_TO_STATE = 'CREATE_AND_ADD_TO_STATE';
 const DELETE_AND_REMOVE_FROM_STATE = 'DELETE_AND_REMOVE_FROM_STATE';
-const EDIT_ARTICLE_AND_UPDATE_STATE = 'EDIT_ARTICLE_AND_UPDATE_STATE';
+const EDIT_AND_UPDATE_STATE = 'EDIT_AND_UPDATE_STATE';
 
 const fetchAllArticles = async () => {
   const { data } = await axios.get('/api/articles');
@@ -29,10 +29,10 @@ const deleteAndRemoveFromState = async (id) => {
   };
 };
 
-const editArticleAndUpdateState = async (id, values) => {
+const editAndUpdateState = async (id, values) => {
   const { data } = await axios.put(`/api/articles/${id}`, values);
   return {
-    type: EDIT_ARTICLE_AND_UPDATE_STATE,
+    type: EDIT_AND_UPDATE_STATE,
     payload: data,
   };
 };
@@ -44,6 +44,6 @@ export {
   createAndAddToState,
   DELETE_AND_REMOVE_FROM_STATE,
   deleteAndRemoveFromState,
-  EDIT_ARTICLE_AND_UPDATE_STATE,
-  editArticleAndUpdateState,
+  EDIT_AND_UPDATE_STATE,
+  editAndUpdateState,
 };
