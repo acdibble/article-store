@@ -31,8 +31,8 @@ class Main extends Component {
 
     this.state = {
       id: '',
-      showDisplay: false,
-      showEdit: false,
+      showDisplayModal: false,
+      showEditModal: false,
       title: '',
       author: '',
       body: '',
@@ -49,7 +49,7 @@ class Main extends Component {
 
   handleToggle(e) {
     this.setState({
-      showDisplay: !this.state.showDisplay,
+      showDisplayModal: !this.state.showDisplayModal,
       id: !e ? this.state.id : e.target.id,
     });
   }
@@ -57,8 +57,8 @@ class Main extends Component {
   toggleEditModal() {
     const { title, author, body, tags } = this.props.articles[this.state.id];
     this.setState({
-      showEdit: !this.state.showEdit,
-      showDisplay: false,
+      showEditModal: !this.state.showEditModal,
+      showDisplayModal: false,
       title,
       author,
       body,
@@ -69,7 +69,7 @@ class Main extends Component {
   async handleDelete() {
     await this.props.deleteAndRemoveFromState(this.state.id);
     this.setState({
-      showDisplay: !this.state.showDisplay,
+      showDisplayModal: !this.state.showDisplayModal,
     });
   }
 
@@ -106,7 +106,7 @@ class Main extends Component {
           })}
         </ListGroup>
 
-        <Modal show={this.state.showDisplay} onHide={this.handleToggle}>
+        <Modal show={this.state.showDisplayModal} onHide={this.handleToggle}>
           <Modal.Header closeButton>
             <Modal.Title>{currentArticle ? currentArticle.title : 'null'}</Modal.Title>
           </Modal.Header>
@@ -123,9 +123,9 @@ class Main extends Component {
           </Modal.Footer>
         </Modal>
 
-        <Modal show={this.state.showEdit} onHide={this.toggleEditModal}>
+        <Modal show={this.state.showEditModal} onHide={this.toggleEditModal}>
           <Modal.Header closeButton>
-            <Modal.Title>Edit &quot;{currentArticle ? currentArticle.title : 'null'}&quot;</Modal.Title>
+            <Modal.Title>Edit article</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form horizontal>
