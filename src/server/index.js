@@ -52,8 +52,8 @@ app.delete('/api/articles/:id?', async (req, res) => {
   const { id } = req.params;
   if (id) {
     try {
-      await Article.findByIdAndRemove(id);
-      res.sendStatus(200);
+      const { _id } = await Article.findByIdAndRemove(id);
+      res.status(200).send(_id);
     } catch (exc) {
       console.log('COULD NOT DELETE ARTICLE:\n', exc.message);
       res.sendStatus(404);
