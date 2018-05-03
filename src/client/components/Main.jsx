@@ -92,7 +92,7 @@ class Main extends Component {
   }
 }
 
-const mapStateToProps = ({ articles }) => ({ articles: articles.articles });
+const mapStateToProps = ({ articles }) => ({ articles });
 
 
 export default connect(mapStateToProps, { fetchAllArticles })(Main);
