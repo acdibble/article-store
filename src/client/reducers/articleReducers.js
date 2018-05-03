@@ -6,9 +6,10 @@ const articles = (state = {}, { type, payload }) => {
       return { ...payload };
     case CREATE_AND_ADD_TO_STATE:
       return { ...state, ...payload };
-    case DELETE_AND_REMOVE_FROM_STATE:
-      console.log(payload)
-      return state;
+    case DELETE_AND_REMOVE_FROM_STATE: {
+      const { [payload]: gone, ...rest } = state;
+      return { ...rest };
+    }
     default:
       return state;
   }
