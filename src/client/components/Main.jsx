@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { ListGroup, Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 
+import { fetchAllArticles } from '../actions/articleActions';
+
 class Main extends Component {
+  static propTypes = {
+    fetchAllArticles: PropTypes.func.isRequired,
+    articles: PropTypes.objectOf(PropTypes.object).isRequired,
+  }
+
   constructor(props) {
     super(props);
 
     this.state = {
-      articles: null,
       id: '',
     };
 
+    props.fetchAllArticles();
+
     this.handleDelete = this.handleDelete.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
-  }
-
-  async componentWillMount() {
-    this.setState({ articles: (await axios.get('/api/articles')).data });
   }
 
   handleToggle(e) {
@@ -29,16 +35,17 @@ class Main extends Component {
   async handleDelete() {
     const { id } = this.state;
     await axios.delete(`/api/articles/${id}`);
+    this.props.fetchAllArticles();
     this.setState({
-      articles: (await axios.get('/api/articles')).data,
       show: !this.state.show,
     });
   }
 
   render() {
-    if (!this.state.articles) return (<div>Hello world.</div>);
+    if (!this.props.articles) return (<div>Hello world.</div>);
 
-    const { articles } = this.state;
+    const { articles } = this.props;
+    
     const currentArticle = articles[this.state.id];
 
     return (
@@ -81,4 +88,7 @@ class Main extends Component {
   }
 }
 
-export default Main;
+const mapStateToProps = ({ articles }) => ({ articles: articles.articles });
+
+
+export default connect(mapStateToProps, { fetchAllArticles })(Main);

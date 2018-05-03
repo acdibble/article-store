@@ -78,7 +78,7 @@ class Top extends Component {
           </Nav>
         </Navbar>
 
-        <Modal show={true} onHide={this.handleToggle}>
+        <Modal show={this.state.show} onHide={this.handleToggle}>
           <Modal.Header closeButton>
             <Modal.Title>Add new article</Modal.Title>
           </Modal.Header>
