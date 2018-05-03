@@ -64,7 +64,7 @@ app.delete('/api/articles/:id?', async (req, res) => {
   }
 });
 
-app.patch('/api/articles/:id?', async (req, res) => {
+app.put('/api/articles/:id?', async (req, res) => {
   const { id } = req.params;
   if (id) {
     try {
