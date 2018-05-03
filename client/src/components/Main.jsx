@@ -31,7 +31,7 @@ class Main extends Component {
   }
 
   static defaultProps = {
-    articles: null,
+    articles: {},
   }
 
   constructor(props) {
@@ -99,9 +99,20 @@ class Main extends Component {
   }
 
   render() {
-    if (!this.props.articles) return (<div>Hello world.</div>);
-
     const { articles } = this.props;
+    const articlesKeys = Object.keys(articles);
+    if (!articlesKeys.length) {
+      return (
+        <div className="container">
+          <ListGroup>
+            <li className="list-group-item">
+              <h4 className="list-group-item-heading">No results.</h4>
+              <p className="list-group-item-text">Please try again.</p>
+            </li>
+          </ListGroup>
+        </div>
+      );
+    }
 
     const currentArticle = articles[this.state.id];
 
@@ -114,7 +125,7 @@ class Main extends Component {
     return (
       <div className="container">
         <ListGroup>
-          {Object.keys(articles).map((_id) => {
+          {articlesKeys.map((_id) => {
             const a = articles[_id];
             return (
               <a
