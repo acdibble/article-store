@@ -1,4 +1,9 @@
-import { FETCH_ALL_ARTICLES, CREATE_AND_ADD_TO_STATE, DELETE_AND_REMOVE_FROM_STATE } from '../actions/articleActions';
+import {
+  FETCH_ALL_ARTICLES,
+  CREATE_AND_ADD_TO_STATE,
+  DELETE_AND_REMOVE_FROM_STATE,
+  EDIT_AND_UPDATE_STATE,
+} from '../actions/articleActions';
 
 const articles = (state = {}, { type, payload }) => {
   switch (type) {
@@ -10,6 +15,8 @@ const articles = (state = {}, { type, payload }) => {
       const { [payload]: gone, ...rest } = state;
       return { ...rest };
     }
+    case EDIT_AND_UPDATE_STATE:
+      return { ...state, ...payload };
     default:
       return state;
   }
