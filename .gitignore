@@ -57,16 +57,4 @@ typings/
 # dotenv environment variables file
 .env
 
-
-dist
-dist.zip
-.idea/jsLibraryMappings.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
-.idea/workspace.xml
-.idea/dictionaries/richard.xml
-.idea/*
-.idea
-
 README.md
