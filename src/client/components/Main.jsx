@@ -136,10 +136,10 @@ class Main extends Component {
             <Modal.Title>{currentArticle ? currentArticle.title : 'null'}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {!currentArticle ? 'null': currentArticle.body.split('\n').map((item, key) => <span key={key}>{item}<br /></span>)}
+            {!currentArticle ? 'null' : currentArticle.body.split('\n').map((item, key) => <span key={key}>{item}<br /></span>)}
             <br />
             <br />
-            <small>tags: {!currentArticle ? 'null' : currentArticle.tags ? currentArticle.tags.join(', ') : 'none' /* eslint-disable-line */}</small>
+            <small>tags: {!currentArticle ? 'null' : currentArticle.tags.join(', ') || 'none'}</small>
           </Modal.Body>
           <Modal.Footer>
             <OverlayTrigger trigger="click" rootClose overlay={confirmPopover}>
