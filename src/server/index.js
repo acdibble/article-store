@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/api/articles/', async (req, res) => {
   try {
     const article = await Article.create(req.body);
-    res.status(201).send(article);
+    res.status(201).send({ [article._id]: article });
   } catch (exc) {
     console.log('ARTICLE COULD NOT BE CREATED:\n', exc);
     res.sendStatus(500);

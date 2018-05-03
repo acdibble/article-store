@@ -1,11 +1,11 @@
 import { FETCH_ALL_ARTICLES, CREATE_AND_ADD_TO_STATE } from '../actions/articleActions';
 
-const articles = (state = {}, action) => {
-  switch (action.type) {
+const articles = (state = {}, { type, payload }) => {
+  switch (type) {
     case FETCH_ALL_ARTICLES:
-      return { ...action.payload };
+      return { ...payload };
     case CREATE_AND_ADD_TO_STATE:
-      return { ...action.payload, ...state };
+      return { ...state, ...payload };
     default:
       return state;
   }

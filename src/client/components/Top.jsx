@@ -14,15 +14,14 @@ import {
   Col,
   HelpBlock,
 } from 'react-bootstrap';
-import axios from 'axios';
 
-import { fetchAllArticles } from '../actions/articleActions';
+import { createAndAddToState } from '../actions/articleActions';
 
 const { Header, Brand } = Navbar;
 
 class Top extends Component {
   static propTypes = {
-    fetchAllArticles: PropTypes.func.isRequired,
+    createAndAddToState: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -51,7 +50,7 @@ class Top extends Component {
   async handleSubmit() {
     const { author, body, title, tags } = this.state;
     if (author && body && title) {
-      await axios.post('/api/articles', { author, body, title, tags: tags.replace(/\s/g, '') });
+      await this.props.createAndAddToState({ author, body, title, tags: tags.replace(/\s/g, '') });
       this.setState({
         isDirty: false,
         author: '',
@@ -59,7 +58,6 @@ class Top extends Component {
         title: '',
         tags: '',
       });
-      this.props.fetchAllArticles();
       this.handleToggle();
     } else {
       this.setState({ isDirty: true });
@@ -171,4 +169,4 @@ class Top extends Component {
   }
 }
 
-export default connect(null, { fetchAllArticles })(Top);
+export default connect(null, { createAndAddToState })(Top);
