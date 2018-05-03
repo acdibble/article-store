@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const FETCH_ALL_ARTICLES = 'FETCH_ALL_ARTICLES';
-const CREATE_AND_ADD_TO_STATE = 'FETCH_NEW_ARTICLE';
+const CREATE_AND_ADD_TO_STATE = 'CREATE_AND_ADD_TO_STATE';
+const DELETE_AND_REMOVE_FROM_STATE = 'DELETE_AND_REMOVE_FROM_STATE';
 
 const fetchAllArticles = async () => {
   const { data } = await axios.get('/api/articles');
@@ -19,9 +20,19 @@ const createAndAddToState = async (values) => {
   };
 };
 
+const deleteAndRemoveFromState = async (id) => {
+  const { data } = await axios.delete(`/api/articles/${id}`);
+  return {
+    type: DELETE_AND_REMOVE_FROM_STATE,
+    payload: data,
+  };
+};
+
 export {
   FETCH_ALL_ARTICLES,
   fetchAllArticles,
   CREATE_AND_ADD_TO_STATE,
   createAndAddToState,
+  DELETE_AND_REMOVE_FROM_STATE,
+  deleteAndRemoveFromState,
 };
