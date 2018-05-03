@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ListGroup, Modal, Button } from 'react-bootstrap';
-import axios from 'axios';
 
-import { fetchAllArticles } from '../actions/articleActions';
+import { fetchAllArticles, deleteAndRemoveFromState } from '../actions/articleActions';
 
 class Main extends Component {
   static propTypes = {
     fetchAllArticles: PropTypes.func.isRequired,
+    deleteAndRemoveFromState: PropTypes.func.isRequired,
     articles: PropTypes.objectOf(PropTypes.object),
   }
 
@@ -37,9 +37,7 @@ class Main extends Component {
   }
 
   async handleDelete() {
-    const { id } = this.state;
-    await axios.delete(`/api/articles/${id}`);
-    this.props.fetchAllArticles();
+    await this.props.deleteAndRemoveFromState(this.state.id);
     this.setState({
       show: !this.state.show,
     });
@@ -95,4 +93,4 @@ class Main extends Component {
 const mapStateToProps = ({ articles }) => ({ articles });
 
 
-export default connect(mapStateToProps, { fetchAllArticles })(Main);
+export default connect(mapStateToProps, { fetchAllArticles, deleteAndRemoveFromState })(Main);
